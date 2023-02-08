@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "252647766463",
+    "project_id": "smoney-ed2e9",
+    "storage_bucket": "smoney-ed2e9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252647766463:android:c8538868aabfade82b490a",
+        "android_client_info": {
+          "package_name": "com.htnguyen.flutternote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252647766463-ive1hh7hgmn32cnvr22ef5hfgsr10f9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1DnZf9HnAZgJzu4FUlQgHxAo7Ma61xXo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252647766463-ive1hh7hgmn32cnvr22ef5hfgsr10f9t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

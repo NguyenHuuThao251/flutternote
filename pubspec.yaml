@@ -31,7 +31,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  http: ^0.13.1
+
+  hive_flutter: ^1.1.0
+  flutter_slidable: ^2.0.0
   curved_navigation_bar: ^1.0.3
+  firebase_database: ^9.0.20
+  firebase_core: ^1.0.2
+  firebase_core_platform_interface: 4.5.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -60,7 +68,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-
+  assets:
+    - assets/
 
 
   # To add assets to your application, add an assets section, like this:

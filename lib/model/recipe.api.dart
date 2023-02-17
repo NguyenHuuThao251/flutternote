@@ -15,7 +15,7 @@ class RecipeApi {
   //});
   static Future<List<Recipe>> getRecipe() async {
     var uri = Uri.https('yummly2.p.rapidapi.com', '/feeds/list',
-        {"limit": "30", "start": "0", "tag": "list.recipe.popular"});
+        {"limit": "10", "start": "0", "tag": "list.recipe.popular"});
     final respone = await http.get(uri, headers: {
       "x-rapidapi-key": "eeea5cd2d2msh21a7837efffc7a8p1a5317jsnb54b689dc1a3",
       "x-rapidapi-host": "yummly2.p.rapidapi.com",

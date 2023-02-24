@@ -66,7 +66,14 @@ class _HomeMainState extends State<HomeMain> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
+        shape: AutomaticNotchedShape(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              ),
+            ),
+        ),
         notchMargin: 10,
         child: Container(
           height: 60,
@@ -75,6 +82,8 @@ class _HomeMainState extends State<HomeMain> {
             children: <Widget>[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   MaterialButton(
                     minWidth: 40,
@@ -99,6 +108,9 @@ class _HomeMainState extends State<HomeMain> {
                          )
                       ],
                     ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.01,
                   ),
                   MaterialButton(
                     minWidth: 40,
@@ -128,6 +140,8 @@ class _HomeMainState extends State<HomeMain> {
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   MaterialButton(
                     minWidth: 40,
@@ -152,6 +166,9 @@ class _HomeMainState extends State<HomeMain> {
                         )
                       ],
                     ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.01,
                   ),
                   MaterialButton(
                     minWidth: 40,

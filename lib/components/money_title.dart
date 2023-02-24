@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MoneyTitle extends StatelessWidget {
   final String namePayment;
@@ -39,28 +40,51 @@ class MoneyTitle extends StatelessWidget {
           ],
         ),
         child: Container(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10.0),
-                bottomLeft: Radius.circular(10.0)
-            ),
-            color: Colors.greenAccent,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            color: Colors.white,
           ),
-          child: Row(children: <Widget>[
-            Column(
-              children: [
-                Text(namePayment,
-                    maxLines: 200,
-                    overflow: TextOverflow.ellipsis,
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                SvgPicture.asset(
+                  "assets/icon/icon_buy.svg",
                 ),
-                Text(numberPayment,
-                    maxLines: 200,
-                    overflow: TextOverflow.ellipsis,
-                )
-              ],
-            ),
-          ]),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          namePayment,
+                          maxLines: 200,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14),
+                          textAlign: TextAlign.start,
+                        ),
+                        Text(
+                          numberPayment,
+                          maxLines: 200,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.start,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Text(
+                  '+65000',
+                  maxLines: 200,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: Colors.green, fontWeight: FontWeight.bold),
+                ),
+              ]),
         ),
       ),
     );

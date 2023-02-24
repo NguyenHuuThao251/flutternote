@@ -11,7 +11,7 @@ class _LoginOnePageState extends State<LoginOnePage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late double screenHeight, screenWidth;
-  bool _obscureText = true;
+  bool _obscureText = false;
 
   void _toggle() {
     setState(() {

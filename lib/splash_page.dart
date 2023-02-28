@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutternote/login/login_one_page.dart';
 import 'package:hive_flutter/adapters.dart';
+
+import 'home_main.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -66,8 +69,14 @@ class _SplashPageState extends State<SplashPage> {
                 borderRadius: BorderRadius.circular(30)),
             child: MaterialButton(
               onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => LoginOnePage()));
+                if(FirebaseAuth.instance.currentUser == null)  {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => LoginOnePage()));
+                } else {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => HomeMain()));
+                }
+
               },
               child: const Text("Login",
                   style: TextStyle(

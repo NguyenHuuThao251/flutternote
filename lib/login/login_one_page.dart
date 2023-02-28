@@ -1,6 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutternote/home_main.dart';
 
+import 'authentication.dart';
 class LoginOnePage extends StatefulWidget {
   const LoginOnePage({super.key});
 
@@ -9,10 +13,17 @@ class LoginOnePage extends StatefulWidget {
 }
 
 class _LoginOnePageState extends State<LoginOnePage> {
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late double screenHeight, screenWidth;
   bool _obscureText = false;
+
+  Future<void> main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  }
 
   void _toggle() {
     setState(() {
@@ -121,7 +132,22 @@ class _LoginOnePageState extends State<LoginOnePage> {
                   color: const Color.fromARGB(255, 255, 202, 66),
                   borderRadius: BorderRadius.circular(30)),
               child: MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  AuthenticationHelper()
+                      .signIn(email: _emailController.text, password: _passwordController.text)
+                      .then((result) {
+                    if (result == null) {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => HomeMain()));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(result),
+                        ),
+                      );
+                    }
+                  });
+                },
                 child: const Text("Login",
                     style: TextStyle(
                         decoration: TextDecoration.none,

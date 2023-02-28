@@ -6,7 +6,7 @@ import 'package:flutternote/splash_page.dart';
 import 'home_main.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

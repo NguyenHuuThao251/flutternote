@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginOnePage extends StatefulWidget {
   const LoginOnePage({super.key});
@@ -19,14 +20,13 @@ class _LoginOnePageState extends State<LoginOnePage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: screenWidth > 400 ? 30 : 10),
+        padding: EdgeInsets.symmetric(horizontal: screenWidth > 500 ? 30 : 10),
         child: ListView(
           shrinkWrap: true,
           children: [
@@ -37,7 +37,7 @@ class _LoginOnePageState extends State<LoginOnePage> {
                   onPressed: () {},
                   icon: Icon(
                     Icons.keyboard_backspace_sharp,
-                    size: screenWidth > 400 ? 6.0 : 30.0,
+                    size: screenWidth > 400 ? 20.0 : 10.0,
                   )),
             ),
             Container(
@@ -91,16 +91,14 @@ class _LoginOnePageState extends State<LoginOnePage> {
                       onTap: () {
                         _toggle();
                       },
-                      child: Icon(
-                        _obscureText ? Icons.visibility : Icons
-                            .visibility_off),
-                    )
-                ),
+                      child: Icon(_obscureText
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                    )),
                 keyboardType: TextInputType.text,
                 obscureText: _obscureText,
               ),
             ),
-
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
@@ -136,36 +134,75 @@ class _LoginOnePageState extends State<LoginOnePage> {
               width: double.infinity,
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 202, 66),
+                  color: const Color.fromARGB(255, 0, 0, 0),
                   borderRadius: BorderRadius.circular(30)),
               child: MaterialButton(
                 onPressed: () {},
-                child: const Text("Login",
-                    style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      child: SvgPicture.asset("assets/icon/icon_apple.svg"),
+                    ),
+                    const Text("Log in using Apple",
+                        style: TextStyle(
+                            decoration: TextDecoration.none,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white)),
+                  ],
+                ),
               ),
             ),
             Container(
               width: double.infinity,
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 202, 66),
+                  color: const Color.fromARGB(255, 213, 231, 212),
                   borderRadius: BorderRadius.circular(30)),
               child: MaterialButton(
                 onPressed: () {},
-                child: const Text("Login",
-                    style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      child: SvgPicture.asset("assets/icon/icon_google.svg"),
+                    ),
+                    const Text("Log in using Google",
+                        style: TextStyle(
+                            decoration: TextDecoration.none,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white)),
+                  ],
+                ),
+              ),
+            ),
+           SizedBox(
+             height: double.infinity,
+           ),
+            const Text.rich(
+              textAlign: TextAlign.center,
+              TextSpan(
+                text: 'Don’t have account? ',
+                style: TextStyle(fontSize: 16),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: 'Sign up',
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        decorationColor: Color.fromARGB(255, 255, 197, 66),
+                      )),
+                ],
               ),
             ),
           ],
-
         ),
       ),
     );

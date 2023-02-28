@@ -34,7 +34,7 @@ class _SplashPageState extends State<SplashPage> {
           ),
           Container(
             width: double.infinity,
-            padding: EdgeInsets.only(left: screenWidth > 400 ? 200 : 100),
+            padding: EdgeInsets.only(left: screenWidth > 1200 ? 800 :(screenWidth > 400 ? 200 : 100)),
             child: Image.asset(
               "assets/images/img_splash.png",
               fit: BoxFit.fill,

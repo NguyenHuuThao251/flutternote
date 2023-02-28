@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,6 +19,7 @@ class _AddInforState extends State<AddInfor> {
   late DatabaseReference dbRef;
   int selectedItem = 0;
   String? typePayment;
+  String? idUser;
   final List<String> _item = [
     "Food",
     "Transfer",
@@ -43,6 +45,7 @@ class _AddInforState extends State<AddInfor> {
   void initState() {
     super.initState();
     dbRef = FirebaseDatabase.instance.ref().child('note_money');
+    idUser = FirebaseAuth.instance.currentUser!.uid;
   }
 
   @override
@@ -254,7 +257,7 @@ class _AddInforState extends State<AddInfor> {
                         'date': date.toString()
                       };
 
-                      dbRef.push().set(money);
+                      dbRef.child(idUser!).push().set(money);
                       Navigator.pop(context);
                     },
                     child: const Text('Insert Data'),

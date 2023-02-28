@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Query dbRef = FirebaseDatabase.instance.ref().child('note_money');
+  String? idUser;
+  late Query dbRef;
   List<String> listImage = [
     "assets/icon/icon_change.svg",
     "assets/icon/icon_transfer.svg",
@@ -39,6 +41,13 @@ class _HomeState extends State<Home> {
 
   void onChanged(int index) {
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    idUser = FirebaseAuth.instance.currentUser!.uid;
+    dbRef = FirebaseDatabase.instance.ref().child('note_money').child(idUser!);
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutternote/login/login_one_page.dart';
+import 'package:flutternote/login/signup_page.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import 'home_main.dart';
@@ -94,7 +95,10 @@ class _SplashPageState extends State<SplashPage> {
                 color: const Color.fromARGB(255, 213, 231, 212),
                 borderRadius: BorderRadius.circular(30)),
             child: MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => SignUp()));
+              },
               child: const Text("Signed Up",
                   style: TextStyle(
                       decoration: TextDecoration.none,

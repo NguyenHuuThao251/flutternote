@@ -1,19 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutternote/home_main.dart';
+import 'package:flutternote/login/authentication.dart';
 
-import 'authentication.dart';
-class LoginOnePage extends StatefulWidget {
-  const LoginOnePage({super.key});
+import '../home_main.dart';
+
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  State<LoginOnePage> createState() => _LoginOnePageState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginOnePageState extends State<LoginOnePage> {
-
+class _SignUpState extends State<SignUp> {
+  final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late double screenHeight, screenWidth;
@@ -29,7 +30,6 @@ class _LoginOnePageState extends State<LoginOnePage> {
       _obscureText = !_obscureText;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -54,7 +54,7 @@ class _LoginOnePageState extends State<LoginOnePage> {
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              child: const Text("Welcome back",
+              child: const Text("Create account",
                   style: TextStyle(
                       decoration: TextDecoration.none,
                       fontSize: 30,
@@ -63,7 +63,7 @@ class _LoginOnePageState extends State<LoginOnePage> {
             ),
             Container(
               padding: EdgeInsets.all(20),
-              child: const Text("Enter your credential to continue",
+              child: const Text("Sign up to get started!",
                   style: TextStyle(
                       decoration: TextDecoration.none,
                       fontSize: 18,
@@ -73,10 +73,26 @@ class _LoginOnePageState extends State<LoginOnePage> {
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: TextField(
+                controller: _userNameController,
+                autofocus: true,
+                decoration: InputDecoration(
+                    hintText: "User name",
+                    hintStyle: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      color: Colors.grey,
+                    ),
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.account_box_outlined)),
+                keyboardType: TextInputType.text,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              child: TextField(
                 controller: _emailController,
                 autofocus: true,
                 decoration: InputDecoration(
-                    hintText: "Email or Username",
+                    hintText: "Email address",
                     hintStyle: TextStyle(
                       fontWeight: FontWeight.w300,
                       color: Colors.grey,
@@ -93,6 +109,31 @@ class _LoginOnePageState extends State<LoginOnePage> {
                 autofocus: true,
                 decoration: InputDecoration(
                     hintText: "Password",
+                    hintStyle: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      color: Colors.grey,
+                    ),
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.password),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        _toggle();
+                      },
+                      child: Icon(_obscureText
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                    )),
+                keyboardType: TextInputType.text,
+                obscureText: _obscureText,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              child: TextFormField(
+                controller: _passwordController,
+                autofocus: true,
+                decoration: InputDecoration(
+                    hintText: "Confirm Password",
                     hintStyle: TextStyle(
                       fontWeight: FontWeight.w300,
                       color: Colors.grey,
@@ -135,7 +176,7 @@ class _LoginOnePageState extends State<LoginOnePage> {
               child: MaterialButton(
                 onPressed: () {
                   AuthenticationHelper()
-                      .signIn(email: _emailController.text, password: _passwordController.text)
+                      .signUp(email: _emailController.text, password: _passwordController.text)
                       .then((result) {
                     if (result == null) {
                       Navigator.pushReplacement(context,
@@ -149,7 +190,7 @@ class _LoginOnePageState extends State<LoginOnePage> {
                     }
                   });
                 },
-                child: const Text("Login",
+                child: const Text("Sign up",
                     style: TextStyle(
                         decoration: TextDecoration.none,
                         fontSize: 20,
@@ -174,7 +215,7 @@ class _LoginOnePageState extends State<LoginOnePage> {
                       margin: EdgeInsets.symmetric(horizontal: 20),
                       child: SvgPicture.asset("assets/icon/icon_apple.svg"),
                     ),
-                    const Text("Log in using Apple",
+                    const Text("Sign up using Apple",
                         style: TextStyle(
                             decoration: TextDecoration.none,
                             fontSize: 20,
@@ -201,7 +242,7 @@ class _LoginOnePageState extends State<LoginOnePage> {
                       margin: EdgeInsets.symmetric(horizontal: 20),
                       child: SvgPicture.asset("assets/icon/icon_google.svg"),
                     ),
-                    const Text("Log in using Google",
+                    const Text("Sign up using Google",
                         style: TextStyle(
                             decoration: TextDecoration.none,
                             fontSize: 20,
@@ -211,17 +252,17 @@ class _LoginOnePageState extends State<LoginOnePage> {
                 ),
               ),
             ),
-           SizedBox(
-             height: double.infinity,
-           ),
+            SizedBox(
+              height: double.infinity,
+            ),
             const Text.rich(
               textAlign: TextAlign.center,
               TextSpan(
-                text: 'Don’t have account? ',
+                text: 'Already member? ',
                 style: TextStyle(fontSize: 16),
                 children: <TextSpan>[
                   TextSpan(
-                      text: 'Sign up',
+                      text: 'Log in',
                       style: TextStyle(
                         decoration: TextDecoration.underline,
                         decorationColor: Color.fromARGB(255, 255, 197, 66),
@@ -235,3 +276,4 @@ class _LoginOnePageState extends State<LoginOnePage> {
     );
   }
 }
+

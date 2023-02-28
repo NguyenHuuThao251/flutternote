@@ -5,15 +5,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 class MoneyTitle extends StatelessWidget {
   final String namePayment;
   final String numberPayment;
+  final String typePayment;
+  final String kindPayment;
   Function(bool?)? onChanged;
   Function(BuildContext)? deleteFunction;
 
-  MoneyTitle(
-      {Key? key,
-      required this.namePayment,
-      required this.numberPayment,
-      required this.onChanged,
-      required this.deleteFunction})
+  MoneyTitle({Key? key,
+    required this.namePayment,
+    required this.numberPayment,
+    required this.typePayment,
+    required this.kindPayment,
+    required this.onChanged,
+    required this.deleteFunction})
       : super(key: key);
 
   @override
@@ -68,7 +71,7 @@ class MoneyTitle extends StatelessWidget {
                           textAlign: TextAlign.start,
                         ),
                         Text(
-                          numberPayment,
+                          kindPayment,
                           maxLines: 200,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.start,
@@ -78,11 +81,12 @@ class MoneyTitle extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '+65000',
+                  typePayment == "Income" ? "+${numberPayment}" : "-${numberPayment}",
                   maxLines: 200,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold),
+                      color: typePayment == "Income" ? Colors.green : Colors.red,
+                      fontWeight: FontWeight.bold),
                 ),
               ]),
         ),

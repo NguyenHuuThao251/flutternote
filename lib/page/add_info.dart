@@ -17,6 +17,7 @@ class _AddInforState extends State<AddInfor> {
   DateTime date = DateTime.now();
   late DatabaseReference dbRef;
   int selectedItem = 0;
+  String? typePayment;
   final List<String> _item = [
     "Food",
     "Transfer",
@@ -29,6 +30,11 @@ class _AddInforState extends State<AddInfor> {
     "assets/icon/icon_add_transfer.svg",
     "assets/icon/icon_add_transportation.svg",
     "assets/icon/icon_add_transportation.svg"
+  ];
+
+  final List<String> _listTypePayment = [
+    "Income",
+    "Transfer",
   ];
 
   final List<int> _itemInt = [0, 1, 2, 3];
@@ -81,28 +87,69 @@ class _AddInforState extends State<AddInfor> {
                         color: Colors.black38,
                       ),
                     ),
+                    child: DropdownButton<String>(
+                        value: typePayment,
+                        items: _listTypePayment
+                            .map((e) => DropdownMenuItem(
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  child: Text(e)
+                                ), value: e))
+                            .toList(),
+                        hint: Text('Payment Type'),
+                        dropdownColor: Colors.white,
+                        isExpanded: true,
+                        underline: Container(),
+                        onChanged: ((value) {
+                          setState(() {
+                            typePayment = value!;
+                          });
+                        }),
+                        selectedItemBuilder: (BuildContext context) => _listTypePayment
+                            .map(
+                              (e) => Row(
+                                children: [
+                                  Text(e),
+                                ],
+                              ),
+                            )
+                            .toList()),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        width: 1,
+                        color: Colors.black38,
+                      ),
+                    ),
                     child: DropdownButton<int>(
                         value: selectedItem,
                         items: _itemInt
                             .map((e) => DropdownMenuItem(
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SvgPicture.asset(
-                                        _itemImage[e],
-                                        height: 40,
-                                        width: 40,
-                                      ),
-                                      const SizedBox(
-                                        width: 30,
-                                      ),
-                                      Text(_item[e])
-                                    ],
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SvgPicture.asset(
+                                    _itemImage[e],
+                                    height: 40,
+                                    width: 40,
                                   ),
-                                ),
-                                value: e))
+                                  const SizedBox(
+                                    width: 30,
+                                  ),
+                                  Text(_item[e])
+                                ],
+                              ),
+                            ),
+                            value: e))
                             .toList(),
                         hint: Text('Payment Type'),
                         dropdownColor: Colors.white,
@@ -116,19 +163,19 @@ class _AddInforState extends State<AddInfor> {
                         selectedItemBuilder: (BuildContext context) => _itemInt
                             .map(
                               (e) => Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    _itemImage[e],
-                                    height: 20,
-                                    width: 20,
-                                  ),
-                                  const SizedBox(
-                                    width: 30,
-                                  ),
-                                  Text(_item[e]),
-                                ],
+                            children: [
+                              SvgPicture.asset(
+                                _itemImage[e],
+                                height: 20,
+                                width: 20,
                               ),
-                            )
+                              const SizedBox(
+                                width: 30,
+                              ),
+                              Text(_item[e]),
+                            ],
+                          ),
+                        )
                             .toList()),
                   ),
                   const SizedBox(
@@ -199,7 +246,8 @@ class _AddInforState extends State<AddInfor> {
                   MaterialButton(
                     onPressed: () {
                       Map<String, String> money = {
-                        'typepayment': _item[selectedItem],
+                        'typepayment': typePayment!,
+                        'kindpayment': _item[selectedItem],
                         'namepayment': nameMoney.text,
                         'numbermoney': numberMoney.text,
                         'contentmoney': contentMoney.text,

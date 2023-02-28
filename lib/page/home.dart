@@ -3,6 +3,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutternote/components/money_title.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 class Home extends StatefulWidget {
   @override
   State<Home> createState() => _HomeState();
@@ -54,7 +55,7 @@ class _HomeState extends State<Home> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
             ),
           ),
-         buildListMoney(),
+          buildListMoney(),
         ],
       ),
     );
@@ -74,9 +75,9 @@ class _HomeState extends State<Home> {
           Text(
             "Indigo Violet",
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18.0,
-                color: Colors.grey,
+              fontWeight: FontWeight.bold,
+              fontSize: 18.0,
+              color: Colors.grey,
             ),
           ),
           Container(
@@ -135,7 +136,7 @@ class _HomeState extends State<Home> {
               itemCount: listImage.length.toInt(),
               itemBuilder: (context, index) {
                 return MaterialButton(
-                  onPressed: () {  },
+                  onPressed: () {},
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -163,10 +164,14 @@ class _HomeState extends State<Home> {
           Map student = snapshot.value as Map;
           student['key'] = snapshot.key;
           return MoneyTitle(
-              namePayment: student['namepayment'],
-              numberPayment: student['numbermoney'],
-              onChanged: (value) => onChanged(index),
-              deleteFunction: (context) => deleteTask(index));
+            namePayment: student['namepayment'],
+            numberPayment: student['numbermoney'],
+            typePayment: student['typepayment'],
+            kindPayment: student['kindpayment'],
+            onChanged: (value) => onChanged(index),
+            deleteFunction: (context) => deleteTask(index),
+
+          );
         },
       ),
     );

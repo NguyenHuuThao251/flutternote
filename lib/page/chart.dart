@@ -1,4 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutternote/model/money_manager.dart';
 
 class Chart extends StatefulWidget {
   @override
@@ -8,8 +10,29 @@ class Chart extends StatefulWidget {
 class _ChartState extends State<Chart> {
   List day = ['Day', 'Week', 'Month', 'Year'];
   int indexCurrent = 0;
+  DatabaseReference dbRef = FirebaseDatabase.instance.ref().child('note_money');
+
+  final List<ManagerMoney> listMoneyManager = [];
+
 
   @override
+  void initState() {
+    super.initState();
+    _getMoney();
+
+  }
+
+  _getMoney() async {
+    final snapshot = await FirebaseDatabase.instance.ref().child('note_money').get();
+    print(snapshot);
+    final map = snapshot.value as Map<dynamic, dynamic>;
+
+    map.forEach((key, value) {
+      final money = ManagerMoney.fromMap(value);
+      listMoneyManager.add(money);
+    });
+    print(listMoneyManager.length);
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
@@ -107,9 +130,12 @@ class _ChartState extends State<Chart> {
                 )
               ],
             ),
-          )
+          ),
+
         ],
       ),
     );
   }
+
+
 }

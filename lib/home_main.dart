@@ -1,6 +1,6 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutternote/components/main_drawer.dart';
 import 'package:flutternote/page/add_info.dart';
 import 'package:flutternote/page/chart.dart';
@@ -26,30 +26,16 @@ class _HomeMainState extends State<HomeMain> {
 
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = Home();
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 5,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Container(
-              height: 40,
-              width: 40,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                    'https://canthoplus.com/wp-content/uploads/2022/04/2-tinh-nghe-an-thuoc-mien-nao-cua-viet-nam-bien-dien-thanh.jpg',
-                  alignment: Alignment.center,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
       drawer: MainDrawer(),
       body: PageStorage(
         child: currentScreen,

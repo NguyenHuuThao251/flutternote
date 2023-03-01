@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutternote/model/money_manager.dart';
 
 class Chart extends StatefulWidget {
@@ -14,12 +15,12 @@ class _ChartState extends State<Chart> {
 
   final List<ManagerMoney> listMoneyManager = [];
 
-
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     _getMoney();
-
   }
 
   _getMoney() async {

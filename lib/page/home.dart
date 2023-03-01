@@ -2,8 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutternote/components/money_title.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'currency_converter.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -12,6 +15,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String? idUser;
+  String? userName = "You";
   late Query dbRef;
   List<String> listImage = [
     "assets/icon/icon_change.svg",
@@ -35,6 +39,17 @@ class _HomeState extends State<Home> {
     "Receipt",
   ];
 
+  final List<Widget> screen = [
+    CurrencyConverter(),
+    CurrencyConverter(),
+    CurrencyConverter(),
+    CurrencyConverter(),
+    CurrencyConverter(),
+    CurrencyConverter(),
+    CurrencyConverter(),
+    CurrencyConverter(),
+  ];
+
   void deleteTask(int index) {
     setState(() {});
   }
@@ -46,7 +61,12 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom]);
     idUser = FirebaseAuth.instance.currentUser!.uid;
+    if (FirebaseAuth.instance.currentUser!.displayName != null) {
+      userName = FirebaseAuth.instance.currentUser!.displayName;
+    }
     dbRef = FirebaseDatabase.instance.ref().child('note_money').child(idUser!);
   }
 
@@ -56,6 +76,54 @@ class _HomeState extends State<Home> {
       body: ListView(
         children: [
           buildWelcome(),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.all(0),
+                  icon: Icon(Icons.keyboard_arrow_right),
+                style: ButtonStyle(
+
+                ),
+              ),
+              Container(
+                height: 200,
+                width: MediaQuery.of(context).size.width - 50,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(right: 20),
+                      child: Image.asset("assets/images/Card.png"),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 20),
+                      child: Image.asset("assets/images/Card.png"),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 20),
+                      child: Image.asset("assets/images/Card.png"),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 20),
+                      child: Image.asset("assets/images/Card.png"),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 20),
+                      child: Image.asset("assets/images/Card.png"),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
           buildEasyOperations(),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20),
@@ -73,51 +141,41 @@ class _HomeState extends State<Home> {
   Container buildWelcome() {
     return Container(
       margin: EdgeInsets.all(20.0),
-      child: Column(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            "Welcome,",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
-          ),
-          Text(
-            "Indigo Violet",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18.0,
-              color: Colors.grey,
-            ),
-          ),
           Container(
-            height: 200,
-            width: double.infinity,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.symmetric(vertical: 10),
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: 20),
-                  child: Image.asset("assets/images/Card.png"),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 20),
-                  child: Image.asset("assets/images/Card.png"),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 20),
-                  child: Image.asset("assets/images/Card.png"),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 20),
-                  child: Image.asset("assets/images/Card.png"),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 20),
-                  child: Image.asset("assets/images/Card.png"),
-                ),
-              ],
+            height: 50,
+            width: 50,
+            margin: EdgeInsets.only(right: 10),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image.network(
+                'https://canthoplus.com/wp-content/uploads/2022/04/2-tinh-nghe-an-thuoc-mien-nao-cua-viet-nam-bien-dien-thanh.jpg',
+                alignment: Alignment.center,
+                fit: BoxFit.cover,
+              ),
             ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Welcome,",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+              ),
+              Text(
+                userName!,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                  color: Colors.grey,
+                ),
+              )
+            ],
           ),
         ],
       ),
@@ -145,7 +203,12 @@ class _HomeState extends State<Home> {
               itemCount: listImage.length.toInt(),
               itemBuilder: (context, index) {
                 return MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => screen[index]),
+                    );
+                  },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -162,27 +225,25 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Container buildListMoney() {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.3,
-      child: FirebaseAnimatedList(
-        shrinkWrap: true,
-        query: dbRef,
-        itemBuilder: (BuildContext context, DataSnapshot snapshot,
-            Animation<double> animation, int index) {
-          Map student = snapshot.value as Map;
-          student['key'] = snapshot.key;
-          return MoneyTitle(
-            namePayment: student['namepayment'],
-            numberPayment: student['numbermoney'],
-            typePayment: student['typepayment'],
-            kindPayment: student['kindpayment'],
-            onChanged: (value) => onChanged(index),
-            deleteFunction: (context) => deleteTask(index),
-
-          );
-        },
-      ),
+  FirebaseAnimatedList buildListMoney() {
+    return FirebaseAnimatedList(
+      shrinkWrap: true,
+      query: dbRef,
+      physics: NeverScrollableScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      itemBuilder: (BuildContext context, DataSnapshot snapshot,
+          Animation<double> animation, int index) {
+        Map student = snapshot.value as Map;
+        student['key'] = snapshot.key;
+        return MoneyTitle(
+          namePayment: student['namepayment'],
+          numberPayment: student['numbermoney'],
+          typePayment: student['typepayment'],
+          kindPayment: student['kindpayment'],
+          onChanged: (value) => onChanged(index),
+          deleteFunction: (context) => deleteTask(index),
+        );
+      },
     );
   }
 }

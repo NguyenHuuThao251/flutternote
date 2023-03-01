@@ -18,7 +18,7 @@ class _SlideMenuState extends State<SlideMenu> {
       body: Container(
         width: 288,
         height: double.infinity,
-        color: Color(0xFF17203A),
+        color: Color.fromARGB(255, 21, 115, 254),
         child: SafeArea(
           child: Column(
             children: [

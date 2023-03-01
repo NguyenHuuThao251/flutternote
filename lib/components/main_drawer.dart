@@ -15,7 +15,7 @@ class MainDrawer extends StatelessWidget {
       child: Container(
         width: 288,
         height: double.infinity,
-        color: Color(0xFF17203A),
+        color: Color.fromARGB(255, 110, 169, 255),
         child: SafeArea(
           child: Column(
             children: [

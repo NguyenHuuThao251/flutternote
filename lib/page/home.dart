@@ -81,20 +81,23 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              IconButton(
+              Container(
+                width: 20,
+                child: IconButton(
                   onPressed: () {
                     Scaffold.of(context).openDrawer();
                   },
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.all(0),
-                  icon: Icon(Icons.keyboard_arrow_right),
-                style: ButtonStyle(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.zero,
+                  icon: Icon(Icons.arrow_right),
+                  style: ButtonStyle(
 
+                  ),
                 ),
               ),
               Container(
                 height: 200,
-                width: MediaQuery.of(context).size.width - 50,
+                width: MediaQuery.of(context).size.width - 20,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.symmetric(vertical: 10),

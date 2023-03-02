@@ -49,7 +49,7 @@ class _SignUpState extends State<SignUp> {
                   },
                   icon: Icon(
                     Icons.keyboard_backspace_sharp,
-                    size: screenWidth > 400 ? 20.0 : 10.0,
+                    size: screenWidth > 500 ? 80 : 40,
                   )),
             ),
             Container(

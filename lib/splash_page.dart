@@ -25,12 +25,6 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   @override
-  dispose() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: SystemUiOverlay.values);
-    super.dispose();
-  }
-  @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
@@ -85,10 +79,13 @@ class _SplashPageState extends State<SplashPage> {
             child: MaterialButton(
               onPressed: () {
                 if(FirebaseAuth.instance.currentUser == null)  {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => LoginOnePage()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginOnePage()),
+                  );
                 } else {
-                  Navigator.pushReplacement(context,
+                  Navigator.push(
+                      context,
                       MaterialPageRoute(builder: (context) => HomeMain()));
                 }
 
@@ -110,8 +107,8 @@ class _SplashPageState extends State<SplashPage> {
                 borderRadius: BorderRadius.circular(30)),
             child: MaterialButton(
               onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => SignUp()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const SignUp()));
               },
               child: const Text("Signed Up",
                   style: TextStyle(

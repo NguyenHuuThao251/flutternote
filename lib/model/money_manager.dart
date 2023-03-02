@@ -2,7 +2,7 @@ class ManagerMoney {
   final String typepayment;
   final String kindpayment;
   final String namepayment;
-  final String numberpayment;
+  final double numberpayment;
   final String contentmoney;
   final String date;
 
@@ -20,7 +20,7 @@ class ManagerMoney {
         typepayment: map['typepayment'],
         namepayment: map['namepayment'],
         kindpayment: map['kindpayment'],
-        numberpayment: map['numbermoney'],
+        numberpayment: double.parse(map['numbermoney']),
         contentmoney: map['contentmoney'],
         date: map['date']);
   }

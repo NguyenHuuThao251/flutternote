@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutternote/model/money_manager.dart';
 
 class AddInfor extends StatefulWidget {
   @override
@@ -268,7 +269,7 @@ class _AddInforState extends State<AddInfor> {
                   ),
                   MaterialButton(
                     onPressed: () {
-                      Map<String, String> money = {
+                      Map<String, dynamic> money = {
                         'typepayment': typePayment!,
                         'kindpayment': selectedItem != null
                             ? (typePayment == "Income" ? _itemTextIncome[selectedItem!] : _itemTextExpense[selectedItem!])

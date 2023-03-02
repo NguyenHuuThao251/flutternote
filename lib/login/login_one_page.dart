@@ -49,7 +49,7 @@ class _LoginOnePageState extends State<LoginOnePage> {
                   },
                   icon: Icon(
                     Icons.keyboard_backspace_sharp,
-                    size: screenWidth > 400 ? 20.0 : 10.0,
+                    size: screenWidth > 400 ? 60.0 : 30.0,
                   )),
             ),
             Container(

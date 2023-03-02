@@ -84,7 +84,7 @@ class _SplashPageState extends State<SplashPage> {
                     MaterialPageRoute(builder: (context) => LoginOnePage()),
                   );
                 } else {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => HomeMain()));
                 }

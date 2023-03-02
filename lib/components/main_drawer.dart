@@ -9,24 +9,22 @@ import 'info_card.dart';
 import 'main_drawer_title.dart';
 
 class MainDrawer extends StatelessWidget {
-  const MainDrawer({super.key});
+  String userName;
+  MainDrawer({super.key, required this.userName});
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
   }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
         width: 288,
         height: double.infinity,
-        color: Color.fromARGB(255, 110, 169, 255),
+        color: Color.fromARGB(255, 255, 255, 255),
         child: SafeArea(
           child: ListView(
             children: [
-              const InfoCard(
-                name: "HTNGUYEN",
-                profession: "FACEBOOKER",
-              ),
               _SingleSection(
                 title: "General",
                 children: [

@@ -49,7 +49,7 @@ class _LoginOnePageState extends State<LoginOnePage> {
                   },
                   icon: Icon(
                     Icons.keyboard_backspace_sharp,
-                    size: screenWidth > 400 ? 60.0 : 30.0,
+                    size: screenWidth > 500 ? 50.0 : 25.0,
                   )),
             ),
             Container(
@@ -211,9 +211,6 @@ class _LoginOnePageState extends State<LoginOnePage> {
                 ),
               ),
             ),
-           SizedBox(
-             height: double.infinity,
-           ),
             const Text.rich(
               textAlign: TextAlign.center,
               TextSpan(

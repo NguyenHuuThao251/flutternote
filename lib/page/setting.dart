@@ -1,19 +1,72 @@
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutternote/profile/profile_page.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 class Setting extends StatefulWidget {
   @override
   State<Setting> createState() => _SettingState();
 }
 
 class _SettingState extends State<Setting> {
+  File? image;
+  String? imageUrl;
+  List<XFile>? _imageFileList;
+  final user = FirebaseAuth.instance.currentUser;
+  final storage = FirebaseStorage.instance.ref().child("image_avatar");
+  String fullName = "You";
+  String email = "you@gmail.com";
+
+  void _setImageFileListFromFile(XFile? value) {
+    _imageFileList = value == null ? null : <XFile>[value];
+  }
+
   @override
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
+    _getProfile();
+  }
+
+  dynamic _pickImageError;
+  bool isVideo = false;
+  Future<void> _getProfile() async {
+    if (user != null) {
+      imageUrl = user?.photoURL;
+      fullName = FirebaseAuth.instance.currentUser!.displayName!;
+      email = FirebaseAuth.instance.currentUser!.email!;
+    }
+  }
+
+  Future<void> _updateProfile() async {
+    await user?.updatePhotoURL(imageUrl);
+  }
+
+  Future pickImage(ImageSource imageSource) async {
+    try {
+      final image = await ImagePicker().pickImage(source: imageSource);
+      if (image == null) return;
+
+      final imageTemporary = File(image.path);
+      setState(() {
+        this.image = imageTemporary;
+      });
+      try {
+        await storage.child(user!.uid).putFile(imageTemporary);
+        imageUrl = await storage.child(user!.uid).getDownloadURL();
+        await user?.updatePhotoURL(imageUrl);
+      } on FirebaseException catch (e) {
+        print('Failed to pick image $e');
+      }
+
+    } on PlatformException catch (e) {
+      print('Failed to pick image $e');
+    }
   }
 
   @override
@@ -42,25 +95,34 @@ class _SettingState extends State<Setting> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(170),
-                        child: Image.network(
-                          'https://canthoplus.com/wp-content/uploads/2022/04/2-tinh-nghe-an-thuoc-mien-nao-cua-viet-nam-bien-dien-thanh.jpg',
-                          alignment: Alignment.center,
-                          fit: BoxFit.cover,
-                          height: 170,
-                          width: 170,
-                        ),
-                      ),
+                      GestureDetector(
+                          onTap: () {
+                            pickImage(ImageSource.gallery);
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(170),
+                            child: imageUrl != null ? Image.network(
+                              imageUrl!,
+                              alignment: Alignment.center,
+                              fit: BoxFit.cover,
+                              height: 170,
+                              width: 170,
+                            ) : Image.network(
+                              'https://canthoplus.com/wp-content/uploads/2022/04/2-tinh-nghe-an-thuoc-mien-nao-cua-viet-nam-bien-dien-thanh.jpg',
+                              alignment: Alignment.center,
+                              fit: BoxFit.cover,
+                              height: 170,
+                              width: 170,
+                            ),
+                          )),
                     ],
                   ),
                 ],
               )
             ],
           ),
-
           Text(
-            "Puerto Rico",
+            fullName,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24.0,
@@ -68,7 +130,7 @@ class _SettingState extends State<Setting> {
             textAlign: TextAlign.center,
           ),
           Text(
-            "youremail@domain.com | +01 234 567 89",
+            email,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18.0,
@@ -309,7 +371,6 @@ class _SettingState extends State<Setting> {
               ],
             ),
           ),
-
         ],
       ),
     );

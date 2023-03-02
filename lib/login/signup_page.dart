@@ -49,7 +49,7 @@ class _SignUpState extends State<SignUp> {
                   },
                   icon: Icon(
                     Icons.keyboard_backspace_sharp,
-                    size: screenWidth > 500 ? 80 : 40,
+                    size: screenWidth > 500 ? 50 : 25,
                   )),
             ),
             Container(
@@ -251,9 +251,6 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
               ),
-            ),
-            SizedBox(
-              height: double.infinity,
             ),
             const Text.rich(
               textAlign: TextAlign.center,

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +25,9 @@ class _HomeMainState extends State<HomeMain> {
     Setting(),
   ];
 
+  String? idUser;
+  String? userName = "You";
+  String? imageUrl;
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = Home();
   @override
@@ -31,12 +35,17 @@ class _HomeMainState extends State<HomeMain> {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
+    idUser = FirebaseAuth.instance.currentUser!.uid;
+    if (FirebaseAuth.instance.currentUser!.displayName != null) {
+      userName = FirebaseAuth.instance.currentUser?.displayName;
+      imageUrl = FirebaseAuth.instance.currentUser?.photoURL;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MainDrawer(),
+      drawer: MainDrawer(userName: userName ?? "You"),
       body: PageStorage(
         child: currentScreen,
         bucket: bucket,

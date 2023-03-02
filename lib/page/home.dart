@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutternote/components/money_title.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutternote/page/food_recipe.dart';
 
+import '../profile/profile_page.dart';
 import 'currency_converter.dart';
 
 class Home extends StatefulWidget {
@@ -16,6 +18,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String? idUser;
   String? userName = "You";
+  String? imageUrl;
   late Query dbRef;
   List<String> listImage = [
     "assets/icon/icon_change.svg",
@@ -41,7 +44,7 @@ class _HomeState extends State<Home> {
 
   final List<Widget> screen = [
     CurrencyConverter(),
-    CurrencyConverter(),
+    FoodRecipe(),
     CurrencyConverter(),
     CurrencyConverter(),
     CurrencyConverter(),
@@ -66,6 +69,7 @@ class _HomeState extends State<Home> {
     idUser = FirebaseAuth.instance.currentUser!.uid;
     if (FirebaseAuth.instance.currentUser!.displayName != null) {
       userName = FirebaseAuth.instance.currentUser!.displayName;
+      imageUrl = FirebaseAuth.instance.currentUser?.photoURL;
     }
     dbRef = FirebaseDatabase.instance.ref().child('note_money').child(idUser!);
   }
@@ -155,10 +159,18 @@ class _HomeState extends State<Home> {
             margin: EdgeInsets.only(right: 10),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(50),
-              child: Image.network(
-                'https://canthoplus.com/wp-content/uploads/2022/04/2-tinh-nghe-an-thuoc-mien-nao-cua-viet-nam-bien-dien-thanh.jpg',
-                alignment: Alignment.center,
-                fit: BoxFit.cover,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()),
+                  );
+                },
+                child: Image.network(
+                  imageUrl != null ? imageUrl! : 'https://canthoplus.com/wp-content/uploads/2022/04/2-tinh-nghe-an-thuoc-mien-nao-cua-viet-nam-bien-dien-thanh.jpg',
+                  alignment: Alignment.center,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
